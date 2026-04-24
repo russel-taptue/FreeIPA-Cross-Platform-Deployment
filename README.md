@@ -41,7 +41,7 @@ This repository provides a detailed guide and configuration for deploying FreeIP
 - **CentOS client:** CentOS Stream 9
 - **Windows client:** Windows 10
 
-![FreeIPA Architecture](images/Freeipa_architecture.svg)
+![FreeIPA Architecture](images/FreeIPA_architecture.svg)
 
 *Figure 1: High-level architecture diagram showing the FreeIPA server and connected clients across different operating systems.*
 
@@ -113,16 +113,19 @@ ipa-server-install --setup-dns
 *Figure: Completion of FreeIPA server setup (step 3).*
 
 Access the web interface using this link: https://freeipa-server.aetherscale.local
+
 ![Freeipa_link](images/freeipa_link.png)
 
 *Figure 2: Accessing the FreeIPA web interface via browser.*
 
 Run this command to log in using the admin account:
+
 ![kinit_admin](images/kinit_admin.png)
 
 *Figure 3: Authenticating as admin using kinit command.*
 
 This is the default page:
+
 ![Freeipa_GUI](images/freeipa_gui.png)
 
 *Figure 4: FreeIPA web GUI dashboard after login.*
@@ -185,6 +188,7 @@ On Ubuntu, specify the FreeIPA server address as the DNS server.
 *Figure 11: Configuring /etc/resolv.conf to use FreeIPA as DNS server.*
 
 Edit `/etc/hosts` on Ubuntu:
+
 ![Ubuntu hosts file](images/ubuntu_hosts.png)
 
 *Figure 12: Editing /etc/hosts file on Ubuntu to include domain entries.*
@@ -237,6 +241,7 @@ sudo ipa-client-install --mkhomedir
 
 ### Windows 10
 1. Register the Windows host in FreeIPA using the web UI or CLI.
+
 ![Add hosts graphically](images/freeipa_add_windows.png)
 
 *Figure 18: Adding Windows host to FreeIPA via web interface.*
@@ -262,6 +267,7 @@ sudo klist -k
 3. Configure Windows Kerberos domain settings:
 
 Rename the Windows computer:
+
 ![Windows Rename](images/windows_rename.png)
 
 *Figure 21: Renaming the Windows computer to match domain.*
@@ -278,16 +284,19 @@ ksetup /mapuser * *
 *Figure 22: Configuring Kerberos settings on Windows using ksetup.*
 
 Open Run (Windows + R) and enter: `gpedit.msc`
+
 ![Windows Config](images/gpedit.png)
 
 *Figure 23: Opening Group Policy Editor on Windows.*
 
 Navigate to Windows Settings > Security Settings > Local Policies > Security Options > Network Security: Configure encryption types allowed for Kerberos
+
 ![Windows Config](images/windows_policy.png)
 
 *Figure 24: Navigating to Kerberos encryption settings in Group Policy.*
 
 Enable all supported encryption types except the first two DES options.
+
 ![Windows Config](images/kerberos_encryption.png)
 
 *Figure 25: Enabling supported Kerberos encryption types.*
@@ -311,11 +320,13 @@ Reboot the computer:
 *Figure 29: Successful login to Windows using FreeIPA domain credentials.*
 
 Check the Windows configuration using `ipconfig /all`:
+
 ![Windows config](images/ipconfig.png)
 
 *Figure 30: Verifying network configuration with ipconfig.*
 
 Check the list of hosts in our domain:
+
 ![FreeIPA Hosts](images/freeipa_hosts_2.png)
 
 *Figure 31: Viewing enrolled hosts in FreeIPA web interface.*
@@ -326,6 +337,7 @@ Use the FreeIPA web UI to create and manage user accounts:
 1. Open the FreeIPA web UI.
 2. Navigate to `Identity > Users`.
 3. Click `Add` and complete the required fields.
+
 ![FreeIPA Add User](images/freeipa_add_user.png)
 
 *Figure 32: Adding a new user in FreeIPA web interface.*
@@ -395,6 +407,7 @@ ipa user-mod bakam --sshpubkey="$(cat ~/.ssh/id_ed25519.pub)"
 *Figure 38: Adding SSH public key to user profile in FreeIPA.*
 
 Instead of manual copying, attach the public key to the FreeIPA user profile. This ensures that if a user is deleted from FreeIPA, their access is revoked everywhere instantly.
+
 ![Bakam Key](images/ipa_bakam.png)
 
 *Figure 39: SSH key attached to user in FreeIPA interface.*
@@ -420,6 +433,7 @@ sudo sshd -t
 sudo systemctl restart sshd
 ```
 Try to connect to the CentOS client; it will succeed without a password but will fail on other servers.
+
 ![Bakam Key](images/bakam_ssh.png)
 
 *Figure 41: Successful SSH login using FreeIPA-managed key.*
